@@ -95,6 +95,18 @@ func (catch commandInspect) Execute(cfg *ConfigPokeAreas, args ...string) error 
 	return nil
 }
 
+
+type commandPokedex struct{}
+
+func (pok commandPokedex) Execute(cfg *ConfigPokeAreas, args ...string) error {
+
+	err := cfg.printPokedex()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func commandHelp(cfg *ConfigPokeAreas) error {
 
 	fmt.Printf("Welcome to Pokedex\nUsage:\n\nhelp: Display a help message(this)\nexit: Exit the Pokedex\n\n")
@@ -153,6 +165,11 @@ func NewMainMenu() map[string]mainMenu {
 			name:        "catch",
 			description: "Get the stats of a caught pokemon",
 			command:     commandInspect{},
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Print your current pokedex",
+			command:     commandPokedex{},
 		},
 	}
 	return nm

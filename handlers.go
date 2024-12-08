@@ -325,7 +325,7 @@ func (c *ConfigPokeAreas) inspectPokemon(name string) error {
 	if ok {
 		log.Printf("Found %s within the pokedex", name)
 	} else {
-		return fmt.Errorf("you have not caught %s yet.", name)		
+		return fmt.Errorf("you have not caught %s yet", name)		
 		
 	}
 	fmt.Printf("Name: %s\nHeight: %d\nWeight: %d\nStats: \n", name, val.Height, val.Weight)
@@ -339,4 +339,15 @@ func (c *ConfigPokeAreas) inspectPokemon(name string) error {
 	}
 
 	return nil
+}
+
+func (c *ConfigPokeAreas) printPokedex() error {
+	if len(c.pokeMon) == 0 {
+		return fmt.Errorf("Your pokedex is empty")
+	}
+	fmt.Printf("Your Pokedex: \n")
+	for idx,_ := range c.pokeMon{	
+		fmt.Printf("\t- %s\n",idx)
+	}
+	return nil 
 }

@@ -325,6 +325,7 @@ func (c *ConfigPokeAreas) exploreArea(location string) error {
 }
 
 func (c *ConfigPokeAreas) catchPokemon(name string) error {
+	var max_experience = 500
 	fmt.Printf("Throwing a ball at %s...\n",name)
 	url := fmt.Sprintf("%s/%s",CHARACTER_API_ENDPOINT,name)
 	response,err := http.Get(url)
@@ -343,12 +344,14 @@ func (c *ConfigPokeAreas) catchPokemon(name string) error {
 	if err != nil {
 		return err 
 	}
-	 r := rand.IntN(2)
-	 if r == 0 {
+	var probability_to_catch = int((1 - (pokemon_char.BaseExperience / max_experience) * 100))
+	 r := rand.IntN(100)
+	 if r > probability_to_catch {
 		fmt.Printf("%s has escaped.\n",name)
 	 } else {
 		fmt.Printf("%s was caught\n",name)
+		c.pokeMon[name] = pokemon_char
 	 }
-	log.Printf("The base experience of %s is %v and random int %d",name, pokemon_char.BaseExperience,r)
+	
 	return nil 
 }
